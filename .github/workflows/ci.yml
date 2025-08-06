@@ -1,0 +1,52 @@
+# Nombre del workflow general
+name: Continuous Integration
+
+# Disparadores (los mismos para ambos jobs)
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Definición de los trabajos que componen el workflow
+jobs:
+  # --- TRABAJO 1: LINTER ---
+  # Un trabajo rápido que solo comprueba la sintaxis y el estilo del código.
+  lint:
+    name: 🧹 RTL Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+
+      - name: Run Linter on all RTL files
+        run: |
+          echo "Linting all project files..."
+          INCLUDE_PATHS="-Irtl/peripherals -Irtl/components -Irtl/arithmetic"
+          find rtl/ -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
+            echo "Checking $file..."
+            verilator --lint-only -sv ${INCLUDE_PATHS} "$file" || exit 1
+          done
+          echo "Linting passed."
+
+  # --- TRABAJO 2: VERIFICACIÓN (SIMULACIÓN) ---
+  # Un trabajo más lento que ejecuta todos los testbenches.
+  verify:
+    name: 🔬 Simulation Verification
+    # ¡La línea clave! Este trabajo solo empezará si el job 'lint' ha terminado con éxito.
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+
+      - name: Run Verification Script
+        run: |
+          chmod +x ./verification/scripts/run_all_tests.sh
+          ./verification/scripts/run_all_tests.sh

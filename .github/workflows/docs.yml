@@ -1,0 +1,28 @@
+# .github/workflows/docs.yml
+name: Deploy Documentation
+
+on:
+  # Se ejecuta cada vez que subes código a la rama 'main'
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install mkdocs mkdocs-material
+
+      - name: Build and deploy
+        # Este comando mágico construye la web y la sube a la rama 'gh-pages'
+        run: mkdocs gh-deploy --force --clean
