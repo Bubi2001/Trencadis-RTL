@@ -1,7 +1,11 @@
 # Trencadís RTL 🎨
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/badge/CI-Pending-lightgrey)](https://github.com/Bubi2001/Trencadis-RTL/actions)
+[![Build Status](https://github.com/Bubi2001/Trencadis-RTL/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Bubi2001/Trencadis-RTL/actions/workflows/ci.yml)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Bubi2001/Trencadis-RTL)](https://github.com/Bubi2001/Trencadis-RTL/releases)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Bubi2001/Trencadis-RTL)](https://github.com/Bubi2001/Trencadis-RTL/commits/main)
+[![GitHub repo size](https://img.shields.io/github/repo-size/Bubi2001/Trencadis-RTL)](https://github.com/Bubi2001/Trencadis-RTL)
+[![GitHub contributors](https://img.shields.io/github/contributors/Bubi2001/Trencadis-RTL)](https://github.com/Bubi2001/Trencadis-RTL/graphs/contributors)
 
 > An open-source collection of SystemVerilog IP cores, crafted with the trencadís philosophy: modular, artistic, and functional.
 
@@ -39,13 +43,12 @@ A library of smaller, general-purpose building blocks located in the `rtl/compon
 
 This is the collection of full-featured, bus-connected IP cores.
 
-| Core                  |   Bus   |      Status      | Description                                  |
-| :-------------------- | :------: | :---------------: | :------------------------------------------- |
-| **GPIO**        | Wishbone |  ✅ Implemented  | General Purpose Input/Output controller.     |
-| **UART**        | Wishbone | 🟡 In Development | Universal Asynchronous Receiver-Transmitter. |
-| **SPI Master**  | Wishbone |    ❌ Planned    | Serial Peripheral Interface bus controller.  |
-| **I2C Master**  | Wishbone |    ❌ Planned    | Inter-Integrated Circuit bus controller.     |
-| **Vitrall CPU** | Wishbone |    ❌ Planned    | The central RISC-V core of the Gaudí suite. |
+| Core                 |   Bus   |   Status   | Description                                  |
+| :------------------- | :------: | :--------: | :------------------------------------------- |
+| **GPIO**       | Wishbone | ❌ Planned | General Purpose Input/Output controller.     |
+| **UART**       | Wishbone | ❌ Planned | Universal Asynchronous Receiver-Transmitter. |
+| **SPI Master** | Wishbone | ❌ Planned | Serial Peripheral Interface bus controller.  |
+| **I2C Master** | Wishbone | ❌ Planned | Inter-Integrated Circuit bus controller.     |
 
 ## Getting Started
 
@@ -54,9 +57,8 @@ Integrating a `Trencadís` module into your project is straightforward. The `rtl
 1. **Clone the repository:**
 
    ```bash
-   git clone [https://github.com/Bubi2001/Trencadis-RTL.git](https://github.com/Bubi2001/Trencadis-RTL.git)
+   git clone https://github.com/Bubi2001/Trencadis-RTL.git
    ```
-
 2. **Copy the core's directory or file** from the `rtl/` folder into your project's source tree.
 3. **Instantiate the module** in your design.
 
@@ -72,7 +74,6 @@ Integrating a `Trencadís` module into your project is straightforward. The `rtl
        .q_out    (parallel_out)
    );
    ```
-
 4. For complete systems demonstrating the use of peripherals, please see the projects in the `/examples` directory.
 
 ## The Gaudí Suite
