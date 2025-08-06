@@ -1,0 +1,16 @@
+# mkdocs.yml
+site_name: Trencadís RTL
+theme:
+  name: material
+  palette:
+    primary: teal
+  features:
+    - navigation.tabs
+    - navigation.top
+
+nav:
+  - 'Home': 'index.md'
+  - 'Contributing': 'CONTRIBUTING.md'
+  - 'Datasheets':
+    - 'GPIO': 'doc/gpio.md'
+    - 'UART': 'doc/uart.md'
