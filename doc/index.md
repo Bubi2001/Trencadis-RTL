@@ -20,7 +20,7 @@
 
 This project is inspired by "trencadís", the iconic mosaic technique popularized by Catalan modernist architect Antoni Gaudí. The philosophy is to create a complex, beautiful, and functional whole by artfully assembling smaller, individual pieces—in this case, hardware IP cores.
 
-![Trencadís Mosaic Inspiration](doc/assets/trencadis_stock.jpg)
+![Trencadís Mosaic Inspiration](./assets/trencadis_stock.jpg)
 
 Each module in this repository is designed to be one of those well-crafted fragments: robust, self-contained, and easy to integrate. They are the building blocks for creating your own custom System-on-Chip (SoC) masterpieces.
 

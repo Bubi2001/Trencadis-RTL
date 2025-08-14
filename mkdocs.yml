@@ -10,6 +10,6 @@ theme:
 
 nav:
   - 'Home': 'index.md'
-  - 'Contributing': '../CONTRIBUTING.md'
+  - 'Contributing': 'CONTRIBUTING.md'
   - 'Datasheets':
-    - 'Register File': 'doc/datasheets/components/registe_file.md'
+    - 'Register File': './datasheets/components/registe_file.md'
