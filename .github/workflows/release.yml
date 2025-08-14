@@ -1,14 +1,11 @@
-# .github/workflows/release.yml
 name: Create Release
 
 on:
-  # Se ejecuta solo cuando creas y subes un tag que empieza por 'v' (ej. v0.2.0)
   push:
     tags:
       - 'v*.*.*'
 
 jobs:
-  # Primer trabajo: comprueba que el código del tag es estable
   test_before_release:
     name: 🧪 Run Tests
     runs-on: ubuntu-latest
@@ -19,55 +16,44 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y verilator
       - name: Run Linter & Verification
         run: |
-          # Aquí podrías llamar a tus scripts de linting y verificación
-          # Por simplicidad, los ponemos directamente:
           echo "Linting all files..."
           find rtl/ -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do verilator --lint-only -sv -Irtl/peripherals -Irtl/components -Irtl/arithmetic "$file" || exit 1; done
           echo "Running all tests..."
           chmod +x ./verification/scripts/run_all_tests.sh
           ./verification/scripts/run_all_tests.sh
 
-  # Segundo trabajo: construye los archivos a adjuntar (assets)
   build_assets:
     name: 📦 Build Release Assets
     runs-on: ubuntu-latest
-    # Solo se ejecuta si el trabajo 'test_before_release' ha pasado con éxito
     needs: test_before_release
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install Pandoc
         run: sudo apt-get update && sudo apt-get install -y pandoc
-      
       - name: Build PDF from documentation
         run: |
-          # Combina todos los datasheets en un único PDF
           pandoc doc/*.md -o Trencadis-RTL-Docs.pdf --pdf-engine=xelatex
-          
       - name: Upload PDF artifact
-        # Guarda el PDF para que el siguiente job pueda usarlo
         uses: actions/upload-artifact@v4
         with:
           name: release-assets
           path: Trencadis-RTL-Docs.pdf
-  
-  # Tercer trabajo: crea la release en GitHub
+
   create_release:
     name: 🚀 Create GitHub Release
     runs-on: ubuntu-latest
     needs: build_assets
     permissions:
-      contents: write # Necesario para crear la release
+      contents: write
     steps:
       - name: Download release assets
         uses: actions/download-artifact@v4
         with:
           name: release-assets
-      
       - name: Create Release and Upload Assets
-        # Una acción de la comunidad que hace todo el trabajo pesado
         uses: ncipollo/release-action@v1
         with:
           artifacts: "Trencadis-RTL-Docs.pdf"
           token: ${{ secrets.GITHUB_TOKEN }}
-          generateReleaseNotes: true # Genera las notas de la release automáticamente
+          generateReleaseNotes: true

@@ -1,8 +1,6 @@
-# .github/workflows/docs.yml
 name: Deploy Documentation
 
 on:
-  # Se ejecuta cada vez que subes código a la rama 'main'
   push:
     branches:
       - main
@@ -24,5 +22,4 @@ jobs:
         run: pip install mkdocs mkdocs-material
 
       - name: Build and deploy
-        # Este comando mágico construye la web y la sube a la rama 'gh-pages'
         run: mkdocs gh-deploy --force --clean
