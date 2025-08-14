@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Babiano Novella"
+    given-names: "Adrià"
+title: "Trencadís RTL: An Open-Source Hardware Ecosystem"
+version: 0.1.0 # Update this as you create new releases
+date-released: 2025-08-14
+repository-code: "https://github.com/Bubi2001/Trencadis-RTL"
+license: MIT
+keywords:
+  - "SystemVerilog"
+  - "RTL"
+  - "FPGA"
+  - "ASIC"
+  - "RISC-V"
+  - "SoC"
+  - "open-source hardware"
