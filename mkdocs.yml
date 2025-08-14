@@ -12,5 +12,4 @@ nav:
   - 'Home': 'index.md'
   - 'Contributing': 'CONTRIBUTING.md'
   - 'Datasheets':
-    - 'GPIO': 'doc/gpio.md'
-    - 'UART': 'doc/uart.md'
+    - 'REGISTERFILE': 'doc/datasheets/components/registe_file.md'
