@@ -1,5 +1,5 @@
-# mkdocs.yml
 site_name: Trencadís RTL
+docs_dir: doc
 theme:
   name: material
   palette:
@@ -10,6 +10,6 @@ theme:
 
 nav:
   - 'Home': 'index.md'
-  - 'Contributing': 'CONTRIBUTING.md'
+  - 'Contributing': '../CONTRIBUTING.md'
   - 'Datasheets':
-    - 'REGISTERFILE': 'doc/datasheets/components/registe_file.md'
+    - 'Register File': 'doc/datasheets/components/registe_file.md'
