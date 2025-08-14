@@ -17,13 +17,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y verilator
       - name: Run Linter on all RTL files
         run: |
-          echo "Linting all project files..."
-          INCLUDE_PATHS="-Irtl/peripherals -Irtl/components -Irtl/arithmetic"
-          find rtl/ -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
-            echo "Checking $file..."
-            verilator --lint-only -sv ${INCLUDE_PATHS} "$file" || exit 1
-          done
-          echo "Linting passed."
+          chmod +x ./verification/scripts/run_lint.sh
+          ./verification/scripts/run_lint.sh
 
   verify:
     name: 🔬 Simulation Verification
