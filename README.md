@@ -21,10 +21,10 @@ Each module in this repository is designed to be one of those well-crafted fragm
 
 ## Key Features
 
-- **Modular Design:** Each IP core is self-contained in its own directory, designed for maximum portability.
-- **Standardized Bus:** Major peripherals use the simple and robust [Wishbone (B4)](https://opencores.org/projects/wishbone) bus for easy integration.
-- **Rich Component Library:** Includes not only full peripherals but also a collection of generic, reusable building blocks like FIFOs, synchronizers, and shift registers.
-- **SystemVerilog Source:** Written in modern SystemVerilog for clarity, flexibility, and powerful features.
+- **Core/Wrapper Architecture:** Peripherals are decoupled into a bus-agnostic core and bus-specific wrappers (Wishbone, APB, etc.) for maximum reusability.
+- **Multi-Bus Support:** Designed for broad compatibility, natively supporting Wishbone and planned support for AMBA buses like APB and AXI4-Lite.
+- **Hierarchical IP Library:** Organized into five distinct categories: Peripherals, Drivers, Algorithms, Arithmetic, and Components.
+- **Highly Configurable:** Utilizes SystemVerilog generate and parameters to create flexible and silicon-efficient modules.
 - **Open Source:** Licensed under the permissive MIT License, allowing unrestricted use in both hobbyist and commercial projects.
 - **Documented & Tested:** Each module is accompanied by documentation and a dedicated testbench.
 
@@ -39,16 +39,185 @@ A library of smaller, general-purpose building blocks located in the `rtl/compon
 - Button Debouncers
 - ... and more to come!
 
-## Wishbone Peripherals
+## IP Library Structure
 
-This is the collection of full-featured, bus-connected IP cores.
+The Trencadís library is organized into five logical categories, representing a full stack of hardware design needs.
 
-| Core                 |   Bus   |   Status   | Description                                  |
-| :------------------- | :------: | :--------: | :------------------------------------------- |
-| **GPIO**       | Wishbone | ❌ Planned | General Purpose Input/Output controller.     |
-| **UART**       | Wishbone | ❌ Planned | Universal Asynchronous Receiver-Transmitter. |
-| **SPI Master** | Wishbone | ❌ Planned | Serial Peripheral Interface bus controller.  |
-| **I2C Master** | Wishbone | ❌ Planned | Inter-Integrated Circuit bus controller.     |
+> **Status Legend:** ❌ Planned | 🟡 In Development | ✅ Implemented & Verified
+
+### Peripherals
+
+General-purpose peripherals that provide standard functionalities in an SoC. Each consists of a `core` and at least one bus `wrapper`.
+
+<table>
+  <thead>
+    <tr>
+      <th>Core</th>
+      <th>Interface</th>
+      <th>Status</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">GPIO</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">General Purpose Input/Output controller</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">UART</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">Universal Asynchronous Receiver-Transmitter</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">SPI Master</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">Serial Peripheral Interface bus controller</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">I2C Master</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">Inter-Integrated Circuit bus controller</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">Timer</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">General-purpose counter and PWM generator</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">PID Controller</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">Hardware PID controller with master/slave ports</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+  </tbody>
+</table>
+
+### Drivers
+
+Hardware offload engines designed to manage complex communication with specific external ICs, freeing up the CPU.
+
+<table>
+  <thead>
+    <tr>
+      <th>Target IC</th>
+      <th>Interface</th>
+      <th>Status</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">MPU-9250</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">9-axis IMU (Accelerometer, Gyroscope, Magnetometer) driver</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">DS3231</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">High-precision I2C Real-Time Clock (RTC) driver</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">ADS1115</td>
+      <td>Logic Core</td>
+      <td>❌ Planned</td>
+      <td rowspan="3" style="vertical-align:middle; text-align: center;">16-bit I2C Analog-to-Digital Converter (ADC) driver</td>
+    </tr>
+    <tr>
+      <td>Wishbone</td>
+      <td>❌ Planned</td>
+    </tr>
+    <tr>
+      <td>APB</td>
+      <td>❌ Planned</td>
+    </tr>
+  </tbody>
+</table>
+
+### Algorithms
+
+Complex, application-specific hardware accelerators for computationally intensive tasks.
+
+|    Algorithm    |   Status   |                      Descriprion                      |
+| :--------------: | :--------: | :----------------------------------------------------: |
+|  **FFT**  | ❌ Planned |      Fast Fourier Transform for signal processing      |
+|  **EKF**  | ❌ Planned |  Extended Kalman Filter for sensor fusion (e.g., IMU)  |
+| **CORDIC** | ❌ Planned | Computes trigonometric functions using shifts and adds |
+
+### Arithmetic & Components
+
+The fundamental building blocks (components) and computational units (arithmetic) used to construct the higher-level modules. This includes FIFOs, Synchronizers, Shift Registers, ALUs, FPUs, and more.
 
 ## Getting Started
 
@@ -63,16 +232,27 @@ Integrating a `Trencadís` module into your project is straightforward. The `rtl
 3. **Instantiate the module** in your design.
 
    ```systemverilog
-   // Example instantiation of a component
-   generic_shift_register #(
-       .WIDTH (16)
-   ) i_shifter (
-       .clk      (clk),
-       .rst      (rst),
-       .ena      (shift_enable),
-       .d_in     (serial_in),
-       .q_out    (parallel_out)
-   );
+    // Example 1: Instantiating a simple component
+    trencadis_shift_register #(
+        .WIDTH (16)
+    ) i_shifter (
+    .clk      (clk),
+    .rst      (rst),
+    /*...*/
+    );
+
+    // Example 2: Instantiating a Wishbone-wrapped peripheral
+    trencadis_uart_wb #(
+        .DEFAULT_BAUD (115200)
+    ) i_uart (
+        // Wishbone Bus Interface
+        .wb_clk_i   (clk),
+        .wb_rst_i   (rst),
+        /*...*/
+        // UART Physical Interface
+        .uart_txd_o (uart_tx),
+        .uart_rxd_i (uart_rx)
+    );
    ```
 4. For complete systems demonstrating the use of peripherals, please see the projects in the `/examples` directory.
 
@@ -82,78 +262,8 @@ Integrating a `Trencadís` module into your project is straightforward. The `rtl
 
 - [**`Vitrall`**](https://github.com/Bubi2001/Vitrall): A RISC-V CPU core, the artistic and logical centerpiece of the system.
 - [**`La Pedrera`**](https://github.com/Bubi2001/La-Pedrera): A complete SoC built with `Vitrall` and `Trencadís` cores, implemented on FPGA as a functional masterpiece.
+- [**`Badalot`**](https://github.com/Bubi2001/Badalot): An example implementation of the full library as a balancing robot on a single chip (SoC: *Seesaw-on-Chip*). This design handles the entire control loop in hardware—from IMU sensor fusion with an EKF to PID control and BLDC motor driving—Leaving the CPU free for high-level tasks.
 - [**`La Sagrada Familia`**](https://github.com/Bubi2001/La-Sagrada-Familia): The ASIC implementation of the SoC, representing the permanent, magnum opus of the design effort.
-
-## Roadmap Extendido de Trencadís RTL y la Suite Modernista
-
-### Fase 1: El Cimiento (Q4 2025 - Q1 2026)
-
-*Objetivo: Establecer una base sólida para el proyecto, con los primeros componentes funcionales y una estructura impecable.*
-
-- **[✔] Infraestructura del Proyecto:**
-  - [ ] Finalizar y asentar la estructura de directorios (`rtl`, `verification`, `doc`, `examples`).
-  - [ ] Crear y pulir los archivos `README.md` (EN/CA), `LICENSE` y `CONTRIBUTING.md`.
-  - [ ] Configurar un flujo de simulación base con una herramienta (ej. Verilator, GHDL) y automatizarlo con scripts.
-- **[✔] Componentes Fundamentales (`components/`):**
-  - [ ] Implementar y verificar un `Shift Register` paramétrico.
-  - [ ] Implementar y verificar un `Register File` genérico.
-  - [ ] Implementar y verificar Sincronizadores para CDC (Clock Domain Crossing).
-  - [ ] Escribir las datasheets para estos componentes iniciales.
-- **[✔] Primer Periférico (`peripherals/`):**
-  - [ ] Implementar y verificar completamente el periférico `GPIO` con su interfaz Wishbone.
-  - [ ] Redactar una datasheet exhaustiva para el `GPIO`.
-- **[✔] Publicación Inicial:**
-  - [ ] Crear un primer ejemplo funcional para una placa iCE40 o similar (ej. "blinky" usando el GPIO).
-  - [ ] Publicar la **`v0.1.0`** en las "Releases" de GitHub.
-
-### Fase 2: El Mosaico (Q2 2026 - Q4 2026)
-
-*Objetivo: Expandir la librería con periféricos de comunicación clave y unidades aritméticas, empezando a formar un sistema más complejo.*
-
-- **[✔] Expansión de Componentes:**
-  - [ ] Añadir un `FIFO` síncrono y asíncrono genérico.
-  - [ ] Añadir un `Debouncer` para pulsadores.
-- **[✔] Periféricos de Comunicación:**
-  - [ ] Implementar y verificar el periférico `UART`.
-  - [ ] Implementar y verificar el periférico `SPI Master`.
-  - [ ] Crear un ejemplo de sistema que combine `UART` y `SPI` (ej. controlar un sensor SPI desde una terminal de PC).
-- **[✔] Unidades Aritméticas (`arithmetic/`):**
-  - [ ] Diseñar e implementar un `ALU` (Unidad Aritmético-Lógica) básica.
-  - [ ] Diseñar e implementar un `Multiplier` hardware dedicado.
-- **[✔] Hitos de Publicación:**
-  - [ ] Publicar la **`v0.2.0`** (incluyendo UART).
-  - [ ] Publicar la **`v0.3.0`** (incluyendo SPI y ALU).
-
-### Fase 3: El Vitrall - El Núcleo del Sistema (2027)
-
-*Objetivo: Dedicar un esfuerzo concentrado en el diseño, implementación y verificación de la pieza central, la CPU `Vitrall`.*
-
-- **[✔] Diseño de la CPU `Vitrall`:**
-  - [ ] Definir la microarquitectura (ej. pipeline clásico de 5 etapas).
-  - [ ] Implementar cada una de las etapas del pipeline (Fetch, Decode, Execute, Memory, Writeback).
-  - [ ] Diseñar la interfaz de bus Wishbone para las etapas de memoria e instrucciones.
-- **[✔] Verificación Rigurosa:**
-  - [ ] Construir un entorno de testbench avanzado para la CPU.
-  - [ ] Superar el set de tests de compatibilidad de RISC-V (`riscv-compliance`).
-- **[✔] Hito de Publicación:**
-  - [ ] Publicar la **`v0.4.0`** con la primera versión funcional de `Vitrall`.
-
-### Fase 4: La Obra Maestra y el Legado (2028+)
-
-*Objetivo: Integrar todo en los SoCs finales, explorar la fabricación física y consolidar el proyecto para la comunidad.*
-
-- **[✔] `La Pedrera` - SoC en FPGA:**
-  - [ ] Diseñar y construir un SoC completo integrando `Vitrall`, `GPIO`, `UART`, `SPI` y una controladora de memoria.
-  - [ ] Escribir un pequeño "monitor" o "BIOS" en ensamblador/C para probar el sistema.
-  - [ ] Hacer un "port" de una aplicación simple (una terminal de comandos, un intérprete de Forth, o el juego "Pong" sobre VGA).
-- **[✔] `La Sagrada Familia` - El Reto del ASIC:**
-  - [ ] Adaptar el diseño de `La Pedrera` para un flujo de ASIC de código abierto (OpenROAD, Sky130).
-  - [ ] Superar las fases de síntesis, place & route, y verificación física (DRC/LVS).
-  - [ ] Generar el GDSII final, la culminación del proyecto.
-- **[✔] Madurez y Comunidad:**
-  - [ ] Publicar la versión  **`v1.0.0`** , considerada la primera versión "estable y completa" de la librería.
-  - [ ] Seguir añadiendo IPs avanzados (`I2C`, `DMA Controller`, `FPU`).
-  - [ ] Mantener el proyecto, corregir bugs y revisar contribuciones de la comunidad.
 
 ## Contributing
 
