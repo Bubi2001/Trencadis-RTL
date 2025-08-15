@@ -36,7 +36,7 @@ jobs:
       - name: Build PDF from Documentation
         run: |
           cd doc
-          DATASHEETS=$(find datasheets -nmae "*.md")
+          DATASHEETS=$(find datasheets -name "*.md")
           pandoc R../EADME.md ${DATASHEETS} -o ../Trencadis-RTL-Docs.pdf \
           --pdf-engine=xelatex \
           --resource-path=.
