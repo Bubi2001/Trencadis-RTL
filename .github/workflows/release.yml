@@ -37,7 +37,7 @@ jobs:
         run: |
           cd doc
           DATASHEETS=$(find datasheets -name "*.md")
-          pandoc R../EADME.md ${DATASHEETS} -o ../Trencadis-RTL-Docs.pdf \
+          pandoc ../README.md ${DATASHEETS} -o ../Trencadis-RTL-Docs.pdf \
           --pdf-engine=xelatex \
           --resource-path=.
       - name: Upload PDF artifact
