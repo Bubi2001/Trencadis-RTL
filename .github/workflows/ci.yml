@@ -27,8 +27,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install Verilator
-        run: sudo apt-get update && sudo apt-get install -y verilator
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y verilator build-essential
       - name: Run Verification Script
         run: |
           chmod +x ./verification/scripts/run_all_tests.sh

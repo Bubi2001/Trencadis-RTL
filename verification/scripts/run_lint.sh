@@ -16,13 +16,8 @@ echo "🧹 Running Linter on all RTL files..."
 # --- Configuration ---
 # Define all directories containing RTL modules that might be instantiated.
 # This ensures Verilator can find any submodule referenced in your code.
-INCLUDE_PATHS=" \
-  -Irtl/peripherals \
-  -Irtl/drivers \
-  -Irtl/algorithms \
-  -Irtl/arithmetic \
-  -Irtl/components \
-"
+# Recursively find all subdirectories under rtl/ and add them as include paths
+INCLUDE_PATHS=$(find rtl/ -type d -exec printf " -I%s" {} \;)
 
 # --- Main Loop ---
 # Find all SystemVerilog files in the rtl directory and check them one by one.

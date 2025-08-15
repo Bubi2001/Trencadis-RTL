@@ -1,8 +1,6 @@
 # Makefile for the Trencadís-RTL Project
 
 # --- Configuration ---
-# List all testbench top-level files here
-TESTBENCHES := $(shell find verification/tb -name "tb_*.sv")
 PYTHON ?= python3
 
 # --- Core Tasks ---
@@ -12,18 +10,30 @@ PYTHON ?= python3
 help:
 	@echo "Trencadís-RTL Makefile"
 	@echo "--------------------------"
-	@echo " lint         - Run Verilator linter on all RTL files."
-	@echo " test         - Run all verification testbenches."
-	@echo " docs         - Serve the documentation website locally for preview."
-	@echo " clean        - Remove all generated build and simulation files."
+	@echo " lint                - Run Verilator linter on all RTL files."
+	@echo " test                - Run all verification testbenches."
+	@echo " test TB=<path>      - Run a specific testbench. e.g., make test TB=verification/tb/tb_register_file.sv"
+	@echo " test TB=<path> WAVES=1 - Run a specific testbench and open GTKWave with the results."
+	@echo " docs                - Serve the documentation website locally for preview."
+	@echo " clean               - Remove all generated build and simulation files."
 
 lint:
 	@echo "🧹 Running Linter..."
-	@verification/scripts/run_lint.sh # Assuming you create a script for the lint command
+	@./verification/scripts/run_lint.sh
 
+# The test target now accepts optional TB and WAVES arguments.
 test:
-	@echo "🔬 Running Verification..."
-	@./verification/scripts/run_all_tests.sh
+	@if [ -z "$(TB)" ]; then \
+		echo "🔬 Running all verification testbenches..."; \
+		./verification/scripts/run_all_tests.sh; \
+	else \
+		echo "🔬 Running specific testbench: $(TB)..."; \
+		if [ "$(WAVES)" = "1" ]; then \
+			./verification/scripts/run_all_tests.sh $(TB) --waves; \
+		else \
+			./verification/scripts/run_all_tests.sh $(TB); \
+		fi; \
+	fi
 
 docs:
 	@echo "📚 Serving documentation at http://127.0.0.1:8000"
@@ -33,5 +43,5 @@ clean:
 	@echo "🧼 Cleaning up generated files..."
 	@rm -rf obj_dir/
 	@rm -rf site/
-	@find . -name "*.vcd" -delete
+	@rm -rf verification/waves/
 	@find . -name "*.log" -delete
