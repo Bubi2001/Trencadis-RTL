@@ -1,6 +1,19 @@
-// This module defines a register file with a parameterized number of read ports,
-// a single write port, and an optional RISC-V style zero register.
-module register_file #(
+// ================================================================================
+// 
+// Module/File Name    : trencadis_register_file
+// Project Name        : Trencadís RTL
+// Description         : This module defines a register file with a parameterized
+//                       number of read ports, a single write port, and an optional
+//                       RISC-V style zero register.
+// 
+// Author              : Adrià Babiano Novella
+// Create Date         : 2025-08-14
+// Revision            : v1.0
+// Revision history:
+//   v1.0 - Initial Version
+// ================================================================================
+
+module trencadis_register_file #(
     // --- Parameters ---
     parameter int NUM_READ_PORTS     = 2,    // Number of read ports (configurable)
     parameter int REG_COUNT          = 32,   // Number of registers in the file
