@@ -35,9 +35,9 @@ jobs:
           sudo apt-get install -y pandoc texlive-xetex librsvg2-bin
       - name: Build PDF from Documentation
         run: |
-          pandoc README.md doc/datasheets/*.md -o Trencadis-RTL-Docs.pdf \
-            --pdf-engine=xelatex \
-            --resource-path=.:doc
+          pandoc README.md $(find doc/datasheets -name "*.md") -o Trencadis-RTL-Docs.pdf \
+          --pdf-engine=xelatex \
+          --resource-path=.:doc
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
