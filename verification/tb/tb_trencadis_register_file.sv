@@ -258,7 +258,6 @@ module tb_trencadis_register_file;
         $display("[%0t] Test 6 Finished.", $time);
 
         // --- Final Test Summary ---
-        test_failed = 1'b1;
         if (test_failed) begin
             $display("\n");
             $display("                              _ ._  _ , _ ._");
