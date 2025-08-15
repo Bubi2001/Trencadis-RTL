@@ -29,11 +29,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install Pandoc
-        run: sudo apt-get update && sudo apt-get install -y pandoc
-      - name: Build PDF from documentation
+      - name: Install PDF Generation Dependencies
         run: |
-          pandoc doc/*.md -o Trencadis-RTL-Docs.pdf --pdf-engine=xelatex
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex librsvg2-bin
+      - name: Build PDF from Documentation
+        run: |
+          pandoc README.md doc/datasheets/*.md -o Trencadis-RTL-Docs.pdf \
+            --pdf-engine=xelatex \
+            --resource-path=.:doc
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
