@@ -6,7 +6,7 @@ Last Updated: 2025-08-16
 
 ## 1. Overview
 
-The `ttrencadis_register_file` is a flexible, synthesizable SystemVerilog module that implements a high-performance register file with one synchronous write port and a parameterizable number of asynchronous read ports. It is designed to be a core component in processor designs, particularly those requiring concurrent data access, such as in the execution stage of a pipelined CPU. Key features include a configurable register count and data width, and an optional mode to enforce that register 0 is hardwired to zero, making it directly compatible with the RISC-V integer instruction set architecture (ISA).
+The `trencadis_register_file` is a flexible, synthesizable SystemVerilog module that implements a high-performance register file with one synchronous write port and a parameterizable number of asynchronous read ports. It is designed to be a core component in processor designs, particularly those requiring concurrent data access, such as in the execution stage of a pipelined CPU. Key features include a configurable register count and data width, and an optional mode to enforce that register 0 is hardwired to zero, making it directly compatible with the RISC-V integer instruction set architecture (ISA).
 
 ## 2. Features
 
@@ -22,7 +22,7 @@ The `ttrencadis_register_file` is a flexible, synthesizable SystemVerilog module
 
 A conceptual block diagram is shown below. The number of read ports is determined by the `NUM_READ_PORTS` parameter.
 
-![Parametrable register file read ports](doc/assets/reg_file_parametrable.png)
+![Parametrable register file read ports](doc/assets/reg_file_parametrable.svg)
 
 ## 4. Parameters (Generics)
 
@@ -40,7 +40,7 @@ A table describing the parameters that can be set at instantiation time to confi
 A detailed table of all input and output ports.
 
 | **Port Name** | **Direction** | **Width** | **Description** |
-| ------------------- | ------------------- | ----------------------------------------------- | ------------------------------------------------------------- |
+| ------------------- | ------------------- | ---- | ------------------------------------------------------------- |
 | `clk_i` | `input` | `1` | System clock. All synchronous write logic is clocked on the positive edge of this signal. |
 | `rst_ni` | `input` | `1` | Active-low asynchronous system reset. When asserted (`0`), all registers are cleared to zero. |
 | `waddr_i` | `input` | `$clog2(REG_COUNT)` | Write address. Selects the register to be written to. |
@@ -79,11 +79,11 @@ The module uses an active-low asynchronous reset (`rst_n`). When `rst_n` is pull
 
 This diagram shows a reset condition demonstrating that the output ports go to zero regardless of the clock
 
-![Asyncronous reset](doc/assets/register_file_reset_wavedrom.png)
+![Asyncronous reset](doc/assets/register_file_reset_wavedrom.svg)
 
 This diagram shows a simultaneous read and write to the same register address. Note that `rdata` reflects the value of the register *before* the write operation completes on the next rising clock edge.
 
-![Read after write](doc/assets/register_file_wavedrom.png)
+![Read after write](doc/assets/register_file_wavedrom.svg)
 
 ## 8. Instatiation Template
 
