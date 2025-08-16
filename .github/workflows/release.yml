@@ -32,13 +32,11 @@ jobs:
       - name: Install PDF Generation Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex librsvg2-bin
+          sudo apt-get install -y pandoc texlive-xetex
       - name: Build PDF from Documentation
         run: |
-          cat README.md | sed '/shields\.io/d' > README_FOR_PDF.md
           pandoc README_FOR_PDF.md $(find doc/datasheets -name "*.md") -o Trencadis-RTL-Docs.pdf \
-          --pdf-engine=xelatex \
-          --resource-path=.
+          --pdf-engine=xelatex
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:

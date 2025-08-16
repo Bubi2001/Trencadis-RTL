@@ -101,17 +101,38 @@ Visual diagrams showing signal interactions for key operations. Example UART out
 
 ---
 
-## 9. Bus Wrappers
+## 9. Instantiation Template
+
+Here is an example of how to instantiate the trencadis_[module_name] in SystemVerilog:
+
+```systemverilog
+    trencadis_[module_name] #(
+        .parameter1(value),
+        .parameter2(value)
+    ) i_[module_name] (
+        // generic ports
+        .clk_i(clk),
+        .rst_ni(rst_n),
+        // other ports
+        .port1_i(port1),
+        .port2_o(port2),
+        .port3_io(port3)
+    );
+```
+
+---
+
+## 10. Bus Wrappers
 
 This section provides the necessary information to instantiate and use the core with a specific standard bus. It is purely a **translation guide** to the core's native interface.
 
-### 9.1. Wishbone Wrapper (`trencadis_[module_name]_wb`)
+### 10.1. Wishbone Wrapper (`trencadis_[module_name]_wb`)
 
-#### 9.1.1. Wrapper Parameters
+#### 10.1.1. Wrapper Parameters
 
 *\*(Parameters specific to this wrapper, if any)*
 
-#### 9.1.2. Wrapper Port Descriptions
+#### 10.1.2. Wrapper Port Descriptions
 
 This table lists the external ports of the **Wishbone-wrapped module**.
 
@@ -123,21 +144,40 @@ This table lists the external ports of the **Wishbone-wrapped module**.
 | ... | | | |
 | `uart_txd_o`| `output` | `1` | Physical UART transmit pin. |
 
-#### 9.1.3. Wishbone Timing Diagrams
+#### 10.1.3. Wishbone Timing Diagrams
 
 Visual diagrams showing signal interactions for key operations. A Wishbone read/write cycle is a perfect example for peripherals. Tools like [WaveDrom](https://wavedrom.com/) are excellent for creating these directly in Markdown.
 
 `![Wishbone Write Cycle](assets/[module_name]_wb_write.png)`
 
-### 9.2. APB Wrapper (`trencadis_[module_name]_apb`)
+### 10.1.4. Wishbone Instantiation Template
+
+```systemverilog
+    trencadis_[module_name]_wb #(
+        .parameter1(value),
+        .parameter2(value)
+    ) i_[module_name] (
+        // generic ports
+        .clk_i(clk),
+        .rst_ni(rst_n),
+        // wishbone ports
+        .wb_addr_i(wb_addr),
+        // other ports
+        .port1_i(port1),
+        .port2_o(port2),
+        .port3_io(port3)
+    );
+```
+
+### 10.2. APB Wrapper (`trencadis_[module_name]_apb`)
 
 *\*(This section would be structured identically to the Wishbone one, containing only the wrapper's parameters, ports, and bus-specific timing diagrams.)*
 
-*\*(Add as many sections 9.x as necessary depending on the amount of bus wrappers implemented.)*
+*\*(Add as many sections 10.x as necessary depending on the amount of bus wrappers implemented.)*
 
 ---
 
-## 10. Revision History
+## 11. Revision History
 
 A log of changes to this document and the corresponding RTL module. This is critical for tracking versions and understanding what has changed over time.
 
