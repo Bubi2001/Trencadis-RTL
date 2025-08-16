@@ -23,25 +23,29 @@ jobs:
           ./verification/scripts/run_all_tests.sh
 
   build_assets:
-    name: 📦 Build Release Assets
+    name: 📦 Build Release Assets (Website)
     runs-on: ubuntu-latest
     needs: test_before_release
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install PDF Generation Dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - name: Install dependencies
+        run: pip install mkdocs mkdocs-material
+      - name: Build documentation website
+        run: mkdocs build
+      - name: Package website into a zip file
         run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex
-      - name: Build PDF from Documentation
-        run: |
-          pandoc README.md $(find doc/datasheets -name "*.md") -o Trencadis-RTL-Docs.pdf \
-          --pdf-engine=xelatex
-      - name: Upload PDF artifact
+          VERSION=${GITHUB_REF##*/}
+          zip -r Trencadis-RTL-Docs-${VERSION}.zip ./site
+      - name: Upload website artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-assets
-          path: Trencadis-RTL-Docs.pdf
+          path: Trencadis-RTL-Docs-*.zip
 
   create_release:
     name: 🚀 Create GitHub Release
