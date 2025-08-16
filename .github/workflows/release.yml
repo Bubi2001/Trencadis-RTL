@@ -35,7 +35,7 @@ jobs:
           sudo apt-get install -y pandoc texlive-xetex
       - name: Build PDF from Documentation
         run: |
-          pandoc README_FOR_PDF.md $(find doc/datasheets -name "*.md") -o Trencadis-RTL-Docs.pdf \
+          pandoc README.md $(find doc/datasheets -name "*.md") -o Trencadis-RTL-Docs.pdf \
           --pdf-engine=xelatex
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
