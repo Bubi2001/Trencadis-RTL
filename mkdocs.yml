@@ -12,4 +12,4 @@ nav:
   - 'Home': 'index.md'
   - 'Contributing': 'CONTRIBUTING.md'
   - 'Datasheets':
-    - 'Register File': './datasheets_md/components/register_file.md'
+    - 'Register File': './datasheets_md/components/trencadis_register_file.md'
