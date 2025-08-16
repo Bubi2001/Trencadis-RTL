@@ -23,29 +23,23 @@ jobs:
           ./verification/scripts/run_all_tests.sh
 
   build_assets:
-    name: 📦 Build Release Assets (Website)
+    name: 📦 Package Release Archive
     runs-on: ubuntu-latest
     needs: test_before_release
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.x
-      - name: Install dependencies
-        run: pip install mkdocs mkdocs-material
-      - name: Build documentation website
-        run: mkdocs build
-      - name: Package website into a zip file
+  
+      - name: Package Deliverable Files into a Zip Archive
         run: |
           VERSION=${GITHUB_REF##*/}
-          zip -r Trencadis-RTL-Docs-${VERSION}.zip ./site
-      - name: Upload website artifact
+          zip -r Trencadis-RTL-Source-${VERSION}.zip rtl/ verification/tb/ doc/datasheets/
+        
+      - name: Upload Source Code Archive
         uses: actions/upload-artifact@v4
         with:
           name: release-assets
-          path: Trencadis-RTL-Docs-*.zip
+          path: Trencadis-RTL-Source-*.zip
 
   create_release:
     name: 🚀 Create GitHub Release
@@ -61,6 +55,11 @@ jobs:
       - name: Create Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "Trencadis-RTL-Docs.pdf"
+          artifacts: "Trencadis-RTL-Source-*.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
+          append_body: true
+          body: |
+            ---
+            **📖 View the full documentation for this version online:**
+            [https://Bubi2001.github.io/Trencadis-RTL/](https://Bubi2001.github.io/Trencadis-RTL/)
