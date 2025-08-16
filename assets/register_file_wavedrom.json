@@ -1,0 +1,22 @@
+{
+  "signal": [
+    { "name": "clk",   "wave": "p........." },
+    ['Write',
+    { "name": "wen",   "wave": "0.1.0....." },
+    { "name": "waddr", "wave": "x.5.x.....", "data": ["ADDR 5"] },
+    { "name": "wdata", "wave": "x.4.x.....", "data": ["0xCAFEF00D"] },
+     ],
+     ['Read',
+    { "name": "raddr[0]", "wave": "x.5.......", "data": ["ADDR 5"] },
+    { "name": "rdata[0]", "wave": "x.3.4.....", "data": ["OLD_DATA[5]", "0xCAFEF00D"] },
+      ],
+  ],
+  "head": {
+    "text": "Register File: 1-Write, 2-Read Cycle (Read-before-Write)",
+    "tick": 0,
+    "every": 2
+  },
+  "config": { 
+    "hscale": 1.5
+  }
+}
