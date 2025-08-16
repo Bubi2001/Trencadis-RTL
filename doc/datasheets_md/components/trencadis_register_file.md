@@ -22,7 +22,7 @@ The `trencadis_register_file` is a flexible, synthesizable SystemVerilog module 
 
 A conceptual block diagram is shown below. The number of read ports is determined by the `NUM_READ_PORTS` parameter.
 
-![Parametrable register file read ports](doc/assets/reg_file_parametrable.svg)
+![Parametrable register file read ports](/doc/assets/reg_file_parametrable.svg)
 
 ## 4. Parameters (Generics)
 
@@ -79,11 +79,11 @@ The module uses an active-low asynchronous reset (`rst_n`). When `rst_n` is pull
 
 This diagram shows a reset condition demonstrating that the output ports go to zero regardless of the clock
 
-![Asyncronous reset](doc/assets/register_file_reset_wavedrom.svg)
+![Asyncronous reset](/doc/assets/register_file_reset_wavedrom.svg)
 
 This diagram shows a simultaneous read and write to the same register address. Note that `rdata` reflects the value of the register *before* the write operation completes on the next rising clock edge.
 
-![Read after write](doc/assets/register_file_wavedrom.svg)
+![Read after write](/doc/assets/register_file_wavedrom.svg)
 
 ## 8. Instatiation Template
 
