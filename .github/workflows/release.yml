@@ -6,32 +6,27 @@ on:
       - 'v*.*.*'
 
 jobs:
-  check_ci_status:
-    name: ✅ Verify Successful CI Run
+  test_before_release:
+    name: 🧪 Run Tests
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
     steps:
-      - name: Check status of CI workflow for this commit
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+      - name: Run Linter & Verification
         run: |
-          conclusion=$(gh run list --workflow "ci.yml" --commit ${{ github.sha }} --branch main --json conclusion --jq '.[0].conclusion')
-          if [[ -z "$conclusion" ]]; then
-            echo "Error: No matching CI workflow run found for commit ${{ github.sha }} on branch main."
-            exit 1
-          fi
-          echo "CI workflow conclusion for this commit is: $conclusion"
-          if [[ "$conclusion" != "success" ]]; then
-            echo "CI workflow did not succeed. Halting release."
-            exit 1
-          fi
-          echo "CI check passed!"
+          echo "Linting all files..."
+          chmod +x ./verification/scripts/run_lint.sh
+          ./verification/scripts/run_lint.sh
+          echo "Running all tests..."
+          chmod +x ./verification/scripts/run_all_tests.sh
+          ./verification/scripts/run_all_tests.sh
 
   build_assets:
     name: 📦 Package Release Assets
     runs-on: ubuntu-latest
-    needs: check_ci_status
+    needs: test_before_release
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
