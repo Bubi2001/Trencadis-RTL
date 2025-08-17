@@ -21,13 +21,10 @@ fi
 echo "✅ Project structure is correct."
 echo ""
 
-# Define the directories to be checked
-CHECK_DIRS="rtl/ verification/tb/"
-
 # --- 2. Verilator Linting ---
 echo "🧹 Running Verilator Linter..."
 # Create include paths from all subdirectories of the directories to be checked
-INCLUDE_PATHS=$(find ${CHECK_DIRS} -type d -exec printf " -I%s" {} \;)
+INCLUDE_PATHS=$(find rtl/ -type d -exec printf " -I%s" {} \;)
 find ${CHECK_DIRS} -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
   echo "   Verilator checking: ${file}"
   verilator --lint-only -sv ${INCLUDE_PATHS} "${file}"
