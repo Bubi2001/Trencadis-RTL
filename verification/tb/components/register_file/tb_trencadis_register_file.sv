@@ -15,7 +15,6 @@
 
 `timescale 1ns/1ps
 
-// Include the design under test.
 `include "trencadis_register_file.sv"
 
 module tb_trencadis_register_file;
@@ -23,7 +22,7 @@ module tb_trencadis_register_file;
     import "DPI-C" function void set_test_status(input bit fail);
 
     // --- Testbench Parameters ---
-    localparam CLK_PERIOD = 10; // Clock period in ns
+    localparam CLK_PERIOD = 10; // 10ns period -> 100MHz clock
 
     // --- Test Status ---
     logic test_failed;
@@ -152,7 +151,6 @@ module tb_trencadis_register_file;
         rst_ni = 1'b0; // Assert reset
         test_failed = 1'b0;
         dut1_wen_i = 1'b0; dut2_wen_i = 1'b0; dut3_wen_i = 1'b0;
-        // Initialize all read addresses to a known value to prevent UNDRIVEN warnings
         dut1_raddr_i = '0;
         dut2_raddr_i = '0;
         dut3_raddr_i = '0;
@@ -167,7 +165,7 @@ module tb_trencadis_register_file;
         dut2_wen_i = 1'b1; dut2_waddr_i = 5; dut2_wdata_i = 32'hCAFEBABE;
         dut3_wen_i = 1'b1; dut3_waddr_i = 5; dut3_wdata_i = 64'hFEEDF00D_BAADF00D;
         @(posedge clk_i);
-        #1; // FIX: Allow DUT to update before changing inputs
+        #1;
         dut1_wen_i = 1'b0; dut2_wen_i = 1'b0; dut3_wen_i = 1'b0;
         dut1_raddr_i[0] = 5; dut2_raddr_i[0] = 5; dut3_raddr_i[0] = 5;
         #1; // Allow async read to propagate
@@ -182,7 +180,7 @@ module tb_trencadis_register_file;
         dut2_wen_i = 1'b1; dut2_waddr_i = 0; dut2_wdata_i = 32'h12345678;
         dut3_wen_i = 1'b1; dut3_waddr_i = 0; dut3_wdata_i = 64'hFFFFFFFF_FFFFFFFF;
         @(posedge clk_i);
-        #1; // FIX: Allow DUT to update before changing inputs
+        #1;
         dut1_wen_i = 1'b0; dut2_wen_i = 1'b0; dut3_wen_i = 1'b0;
         dut1_raddr_i[0] = 0; dut2_raddr_i[0] = 0; dut3_raddr_i[0] = 0;
         #1;

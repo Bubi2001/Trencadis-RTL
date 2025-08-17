@@ -22,22 +22,18 @@ The `trencadis_register_file` is a flexible, synthesizable SystemVerilog module 
 
 A conceptual block diagram is shown below. The number of read ports is determined by the `NUM_READ_PORTS` parameter.
 
-![Parametrable register file read ports](/doc/assets/reg_file_parametrable.svg)
+![Parametrable register file read ports](/doc/assets/reg_file_bd.svg)
 
 ## 4. Parameters (Generics)
 
-A table describing the parameters that can be set at instantiation time to configure the module's behavior or size.
-
 | **Parameter** | **Type** | **Default** | **Description** |
 | -------------------- | -------------- | ----------------- | ------------------------------------------------------ |
-| `NUM_READ_PORTS` | `int` | `2` | Defines the number of concurrent read ports. |
-| `REG_COUNT` | `int` | `32` | Defines the total number of registers in the file. |
-| `DEPTH` | `int` | `32` | Defines the bit width of each individual register. |
+| `NUM_READ_PORTS` | `integer` | `2` | Defines the number of concurrent read ports. |
+| `REG_COUNT` | `integer` | `32` | Defines the total number of registers in the file. |
+| `DEPTH` | `integer` | `32` | Defines the bit width of each individual register. |
 | `ZERO_REG_IS_ZERO` | `bit` | `1` | If `1`, register at address `0`i s hardwired to zero. Writes to address `0` are ignored. If `0`, register `0` is a normal register. |
 
 ## 5. Port Descriptions
-
-A detailed table of all input and output ports.
 
 | **Port Name** | **Direction** | **Width** | **Description** |
 | ------------------- | ------------------- | ---- | ------------------------------------------------------------- |
@@ -53,7 +49,11 @@ Clarity note on Packed Arrays:
 `raddr_i`: Packed array of read addresses. For the default `NUM_READ_PORTS=2`, this is a `logic [1:0][$clog2(REG_COUNT)-1:0]` signal.
 `rdata_o`: Packed array of read data ports. For the default `NUM_READ_PORTS=2`, this is a `logic [1:0][DEPTH-1:0]` signal.
 
-## 6. Functional Description
+## 6. Register Map*
+
+*\* (This module is a simple logic core and does not contain a bus interface or register map.)*
+
+## 7. Functional Description
 
 The `trencadis_register_file` module provides a simple and efficient memory structure commonly used in CPUs. Its operation is divided into three main functions: write, read, and reset.
 
@@ -75,7 +75,7 @@ If the `ZERO_REG_IS_ZERO` parameter is set to `1`, any read from address `0` (`r
 
 The module uses an active-low asynchronous reset (`rst_n`). When `rst_n` is pulled low, all physical registers within the file are immediately and asynchronously set to zero.
 
-## 7. Timing Diagrams
+## 8. Timing Diagrams
 
 This diagram shows a reset condition demonstrating that the output ports go to zero regardless of the clock
 
@@ -85,9 +85,9 @@ This diagram shows a simultaneous read and write to the same register address. N
 
 ![Read after write](/doc/assets/register_file_wavedrom.svg)
 
-## 8. Instatiation Template
+## 9. Instatiation Template
 
-Here is an example of how to instantiate the trencadis_register_file in SystemVerilog:
+Here is an example of how to instantiate the `trencadis_register_file` in SystemVerilog:
 
 ```systemverilog
     trencadis_register_file #(
@@ -109,11 +109,15 @@ Here is an example of how to instantiate the trencadis_register_file in SystemVe
     );
 ```
 
-## 9. Revision History
+## 10. Bus Wrappers*
+
+*\*(This module is a simple logic core and does not have any standard bus wrappers.)*
+
+## 11. Revision History
 
 A log of changes to this document and the corresponding RTL module.
 
 | **Version** | **Date** | **Author(s)** | **Changes** |
 | ----------------- | -------------- | ------------------- | ------------------------------- |
-| `v1.0.0` | 2025-08-04 | Adrià Babiano Novella | Initial draft of the datasheet. |
+| `v1.0.0` | 2025-08-04 | Adrià Babiano Novella | Initial release of the datasheet. |
 | `v1.0.1` | 2025-08-16 | Adrià Babiano Novella | Update image path references and typos in document. |
