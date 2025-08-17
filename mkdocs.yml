@@ -13,3 +13,4 @@ nav:
   - 'Contributing': 'CONTRIBUTING.md'
   - 'Datasheets':
     - 'Register File': 'datasheets_md/components/trencadis_register_file.md'
+    - 'Pulse Generator': 'datasheets_md/components/trencadis_pulse_generator.md'
