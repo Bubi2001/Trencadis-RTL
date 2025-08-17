@@ -25,7 +25,7 @@ echo ""
 echo "🧹 Running Verilator Linter..."
 # Create include paths from all subdirectories of the directories to be checked
 INCLUDE_PATHS=$(find rtl/ -type d -exec printf " -I%s" {} \;)
-find ${CHECK_DIRS} -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
+find rtl/ -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
   echo "   Verilator checking: ${file}"
   verilator --lint-only -sv ${INCLUDE_PATHS} "${file}"
 done
@@ -36,7 +36,7 @@ echo ""
 echo "🔎 Checking custom conventions..."
 EXIT_CODE=0
 
-find ${CHECK_DIRS} -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
+find ${ALLOWED_PATHS} -name "*.sv" -print0 | while IFS= read -r -d $'\0' file; do
   echo "   Convention checking: ${file}"
 
   # --- Rules for RTL files (inside rtl/) ---
