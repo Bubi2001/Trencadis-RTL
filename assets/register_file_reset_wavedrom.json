@@ -1,0 +1,23 @@
+{
+  "signal": [
+    ["Global Signals",
+      {"name": "clk_i",   "wave": "p..........."},
+      {"name": "rst_ni",  "wave": "1.0.......1.", "phase": 0.5}
+    ],
+    {},
+    ["Read Port",
+      {"name": "raddr_i[0]", "wave": "x.2.3.4.5.x."},
+      {"name": "rdata_o[0]", "wave": "x.0.........", "phase": 0.5},
+      {"name": "raddr_i[1]", "wave": "x.6.7.8.9.x."},
+      {"name": "rdata_o[1]", "wave": "x.0.........", "phase": 0.5}
+    ]
+  ],
+  "head":{
+    "text":"Trencadís Register File - Asynchronous Reset Sequence",
+    "tick":0
+  },
+  "foot":{
+    "text":"On the falling edge of rst_ni, all internal registers are asynchronously cleared",
+    "tock":0
+  }
+}

@@ -1,0 +1,12 @@
+{signal: [
+  {name:'rst', 		wave: '0.1..........0.'},
+  {name:'clk', 		wave: 'p..............'},
+  {name:'Counter', 	wave: 'x.345345345343.', data: '0 1 2 0 1 2 0 1 2 0 1 0' },
+  {name:'Pulse',	wave: '0...10.10.10...' }
+],
+ head:{
+   text:'Ticks = 2',
+   tick:0,
+   every:2
+ }
+}
