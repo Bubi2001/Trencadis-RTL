@@ -3,9 +3,10 @@ message: "If you use this software, please cite it as below."
 authors:
   - family-names: "Babiano Novella"
     given-names: "Adrià"
+    orcid: "https://orcid.org/0009-0002-7488-7719"
 title: "Trencadís RTL: An Open-Source Hardware Ecosystem"
-version: 0.1.0 # Update this as you create new releases
-date-released: 2025-08-14
+version: 0.2.2
+date-released: 2025-08-17
 repository-code: "https://github.com/Bubi2001/Trencadis-RTL"
 license: MIT
 keywords:
