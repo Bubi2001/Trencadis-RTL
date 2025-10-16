@@ -1,0 +1,1051 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../CONTRIBUTING/">
+      
+      
+        <link rel="next" href="../trencadis_pulse_generator/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Register File - Trencadís RTL</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#datasheet-trencadis_register_file" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Trencadís RTL" class="md-header__button md-logo" aria-label="Trencadís RTL" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Trencadís RTL
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Register File
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../CONTRIBUTING/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Datasheets
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Trencadís RTL" class="md-nav__button md-logo" aria-label="Trencadís RTL" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Trencadís RTL
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Datasheets
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Datasheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Register File
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Register File
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-block-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Block Diagram
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-parameters-generics" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Parameters (Generics)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-port-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Port Descriptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-register-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Register Map*
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-functional-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Functional Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Functional Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#write-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-timing-diagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Timing Diagrams
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-instatiation-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Instatiation Template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-bus-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Bus Wrappers*
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Revision History
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trencadis_pulse_generator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pulse Generator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-block-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Block Diagram
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-parameters-generics" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Parameters (Generics)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-port-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Port Descriptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-register-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Register Map*
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-functional-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Functional Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Functional Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#write-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-timing-diagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Timing Diagrams
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-instatiation-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Instatiation Template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-bus-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Bus Wrappers*
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Revision History
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="datasheet-trencadis_register_file">Datasheet: trencadis_register_file</h1>
+<p>Version: v1.0.1</p>
+<p>Last Updated: 2025-08-16</p>
+<h2 id="1-overview">1. Overview</h2>
+<p>The <code>trencadis_register_file</code> is a flexible, synthesizable SystemVerilog module that implements a high-performance register file with one synchronous write port and a parameterizable number of asynchronous read ports. It is designed to be a core component in processor designs, particularly those requiring concurrent data access, such as in the execution stage of a pipelined CPU. Key features include a configurable register count and data width, and an optional mode to enforce that register 0 is hardwired to zero, making it directly compatible with the RISC-V integer instruction set architecture (ISA).</p>
+<h2 id="2-features">2. Features</h2>
+<ul>
+<li>Single, synchronous write port.</li>
+<li>Parameterizable number of asynchronous read ports.</li>
+<li>Parameterizable register count (<code>REG_COUNT</code>) and data width (<code>DEPTH</code>).</li>
+<li>Optional RISC-V compatible zero-register functionality (register at address 0 is always zero).</li>
+<li>Fully synchronous design with a single clock domain for writes.</li>
+<li>Active-low asynchronous reset to initialize all registers to zero.</li>
+<li>Standard "read-before-write" behavior for simultaneous read/write to the same address.</li>
+</ul>
+<h2 id="3-block-diagram">3. Block Diagram</h2>
+<p>A conceptual block diagram is shown below. The number of read ports is determined by the <code>NUM_READ_PORTS</code> parameter.</p>
+<p><img alt="Parametrable register file read ports" src="/doc/assets/reg_file_bd.svg" /></p>
+<h2 id="4-parameters-generics">4. Parameters (Generics)</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NUM_READ_PORTS</code></td>
+<td><code>integer</code></td>
+<td><code>2</code></td>
+<td>Defines the number of concurrent read ports.</td>
+</tr>
+<tr>
+<td><code>REG_COUNT</code></td>
+<td><code>integer</code></td>
+<td><code>32</code></td>
+<td>Defines the total number of registers in the file.</td>
+</tr>
+<tr>
+<td><code>DEPTH</code></td>
+<td><code>integer</code></td>
+<td><code>32</code></td>
+<td>Defines the bit width of each individual register.</td>
+</tr>
+<tr>
+<td><code>ZERO_REG_IS_ZERO</code></td>
+<td><code>bit</code></td>
+<td><code>1</code></td>
+<td>If <code>1</code>, register at address <code>0</code>i s hardwired to zero. Writes to address <code>0</code> are ignored. If <code>0</code>, register <code>0</code> is a normal register.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-port-descriptions">5. Port Descriptions</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Port Name</strong></th>
+<th><strong>Direction</strong></th>
+<th><strong>Width</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clk_i</code></td>
+<td><code>input</code></td>
+<td><code>1</code></td>
+<td>System clock. All synchronous write logic is clocked on the positive edge of this signal.</td>
+</tr>
+<tr>
+<td><code>rst_ni</code></td>
+<td><code>input</code></td>
+<td><code>1</code></td>
+<td>Active-low asynchronous system reset. When asserted (<code>0</code>), all registers are cleared to zero.</td>
+</tr>
+<tr>
+<td><code>waddr_i</code></td>
+<td><code>input</code></td>
+<td><code>$clog2(REG_COUNT)</code></td>
+<td>Write address. Selects the register to be written to.</td>
+</tr>
+<tr>
+<td><code>wdata_i</code></td>
+<td><code>input</code></td>
+<td><code>DEPTH</code></td>
+<td>Write data. The data to be written into the selected register.</td>
+</tr>
+<tr>
+<td><code>wen_i</code></td>
+<td><code>input</code></td>
+<td><code>1</code></td>
+<td>Write enable. A high level on this signal enables a write operation on the next positive clock edge.</td>
+</tr>
+<tr>
+<td><code>raddr_i</code></td>
+<td><code>input</code></td>
+<td><code>[NUM_READ_PORTS-1:0][$clog2(REG_COUNT)-1:0]</code></td>
+<td>Packed array of read addresses.<code>raddr_i[n]</code> is the address for the n-th read port.</td>
+</tr>
+<tr>
+<td><code>rdata_o</code></td>
+<td><code>output</code></td>
+<td><code>[NUM_READ_PORTS-1:0][DEPTH-1:0]</code></td>
+<td>Packed array of read data.<code>rdata_o[n]</code> is the data output from the n-th read port.</td>
+</tr>
+</tbody>
+</table>
+<p>Clarity note on Packed Arrays:
+<code>raddr_i</code>: Packed array of read addresses. For the default <code>NUM_READ_PORTS=2</code>, this is a <code>logic [1:0][$clog2(REG_COUNT)-1:0]</code> signal.
+<code>rdata_o</code>: Packed array of read data ports. For the default <code>NUM_READ_PORTS=2</code>, this is a <code>logic [1:0][DEPTH-1:0]</code> signal.</p>
+<h2 id="6-register-map">6. Register Map*</h2>
+<p><em>* (This module is a simple logic core and does not contain a bus interface or register map.)</em></p>
+<h2 id="7-functional-description">7. Functional Description</h2>
+<p>The <code>trencadis_register_file</code> module provides a simple and efficient memory structure commonly used in CPUs. Its operation is divided into three main functions: write, read, and reset.</p>
+<h3 id="write-operation">Write Operation</h3>
+<p>A write operation is performed when the <code>wen</code> (write enable) signal is asserted high. On the next rising edge of <code>clk</code>, the data present on the <code>wdata</code> bus is written into the register selected by the <code>waddr</code> bus. The write is synchronous.</p>
+<p>If the <code>ZERO_REG_IS_ZERO</code> parameter is set to <code>1</code>, any attempt to write to address <code>0</code> (<code>waddr == '0</code>) will be ignored, and the contents of register 0 will remain zero.</p>
+<h3 id="read-operation">Read Operation</h3>
+<p>Read operations are asynchronous (combinatorial). The module supports <code>NUM_READ_PORTS</code> concurrent reads. For each read port <code>i</code>, the address on <code>raddr[i]</code> is used to select a register. The contents of that register are then immediately presented on the corresponding <code>rdata[i]</code> output bus.</p>
+<p>If a read and a write occur to the same address in the same clock cycle, the read port will output the <em>old</em> data stored in the register before the write completes. This is standard "read-before-write" behavior.</p>
+<p>If the <code>ZERO_REG_IS_ZERO</code> parameter is set to <code>1</code>, any read from address <code>0</code> (<code>raddr[i] == '0</code>) will result in <code>rdata[i]</code> being driven to all zeros, regardless of the physical value stored in register 0.</p>
+<h3 id="reset">Reset</h3>
+<p>The module uses an active-low asynchronous reset (<code>rst_n</code>). When <code>rst_n</code> is pulled low, all physical registers within the file are immediately and asynchronously set to zero.</p>
+<h2 id="8-timing-diagrams">8. Timing Diagrams</h2>
+<p>This diagram shows a reset condition demonstrating that the output ports go to zero regardless of the clock</p>
+<p><img alt="Asyncronous reset" src="/doc/assets/register_file_reset_wavedrom.svg" /></p>
+<p>This diagram shows a simultaneous read and write to the same register address. Note that <code>rdata</code> reflects the value of the register <em>before</em> the write operation completes on the next rising clock edge.</p>
+<p><img alt="Read after write" src="/doc/assets/register_file_wavedrom.svg" /></p>
+<h2 id="9-instatiation-template">9. Instatiation Template</h2>
+<p>Here is an example of how to instantiate the <code>trencadis_register_file</code> in SystemVerilog:</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">trencadis_register_file</span><span class="w"> </span><span class="p">#(</span>
+<span class="w">        </span><span class="p">.</span><span class="n">NUM_READ_PORTS</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">REG_COUNT</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">DEPTH</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">ZERO_REG_IS_ZERO</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">i_trencadis_register_file</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">// generic ports</span>
+<span class="w">        </span><span class="p">.</span><span class="n">clk_i</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">rst_ni</span><span class="p">(</span><span class="n">rst_n</span><span class="p">),</span>
+<span class="w">        </span><span class="c1">// write ports</span>
+<span class="w">        </span><span class="p">.</span><span class="n">wen_i</span><span class="p">(</span><span class="n">write_enable</span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">waddr_i</span><span class="p">(</span><span class="n">write_address</span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">wdata_i</span><span class="p">(</span><span class="n">write_data</span><span class="p">),</span>
+<span class="w">        </span><span class="c1">// read ports</span>
+<span class="w">        </span><span class="p">.</span><span class="n">raddr_i</span><span class="p">(</span><span class="n">read_address</span><span class="p">),</span><span class="w">   </span><span class="c1">// Packed array of type logic [1:0][4:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">rdata_o</span><span class="p">(</span><span class="n">read_data</span><span class="p">)</span><span class="w">       </span><span class="c1">// packed array of type logic [1:0][31:0]</span>
+<span class="w">    </span><span class="p">);</span>
+</code></pre></div>
+<h2 id="10-bus-wrappers">10. Bus Wrappers*</h2>
+<p><em>*(This module is a simple logic core and does not have any standard bus wrappers.)</em></p>
+<h2 id="11-revision-history">11. Revision History</h2>
+<p>A log of changes to this document and the corresponding RTL module.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Version</strong></th>
+<th><strong>Date</strong></th>
+<th><strong>Author(s)</strong></th>
+<th><strong>Changes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v1.0.0</code></td>
+<td>2025-08-04</td>
+<td>Adrià Babiano Novella</td>
+<td>Initial release of the datasheet.</td>
+</tr>
+<tr>
+<td><code>v1.0.1</code></td>
+<td>2025-08-16</td>
+<td>Adrià Babiano Novella</td>
+<td>Update image path references and typos in document.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 16, 2025 09:48:20 UTC">October 16, 2025</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
