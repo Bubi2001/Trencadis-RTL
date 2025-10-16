@@ -5,6 +5,10 @@ theme:
   features:
     - navigation.tabs
     - navigation.top
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+    - content.code.copy
   palette:
     - scheme: default
       primary: teal
@@ -25,3 +29,13 @@ nav:
   - 'Datasheets':
     - 'Register File': 'datasheets_md/components/trencadis_register_file.md'
     - 'Pulse Generator': 'datasheets_md/components/trencadis_pulse_generator.md'
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      type: date
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
